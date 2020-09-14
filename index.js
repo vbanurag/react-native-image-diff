@@ -17,7 +17,8 @@ class ImageDiff extends Component {
     this.state = {
       width: props.width,
       height: props.initialHeight,
-      offset: props.width * props.initialOffsetPercentage
+      offset: props.width * props.initialOffsetPercentage,
+      isCenterRef: props.isCenterRef || false,
     }
 
     this._panResponder = PanResponder.create({
@@ -58,6 +59,7 @@ class ImageDiff extends Component {
   render () {
     const IMAGE_WIDTH = this.state.width
     const IMAGE_HEIGHT = this.state.height
+    const isCenterRef = this.state.isCenterRef
     return (
       <View style={[this.props.style, { height: IMAGE_HEIGHT, width: IMAGE_WIDTH }]} {...this._panResponder.panHandlers}>
         <Image
@@ -93,6 +95,19 @@ class ImageDiff extends Component {
           position: 'absolute',
           left: this.state.offset - (this.props.separatorWidth * 0.5)
         }} />
+          {
+            isCenterRef && (
+              <View style={{
+                    height: 30,
+                    width: 30,
+                    borderRadius: 15,
+                    top: IMAGE_HEIGHT/2 - 30,
+                    backgroundColor: this.props.separatorColor,
+                    position: 'absolute',
+                    left: this.state.offset - (this.props.separatorWidth * 0.5) - 15
+                  }} />
+            )
+          }
       </View>
     )
   }
